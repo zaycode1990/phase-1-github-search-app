@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const gitForm = document.querySelector('#github-form')
     gitForm.addEventListener('submit', (e) =>{
         e.preventDefault()
+        e.stopPropagation()
        gitUserSelect(e.target.querySelector('#search').value)
        
     })
@@ -47,11 +48,12 @@ const userLink = document.createElement('a')
     userLogin.style.textAlign = "center"
     userLinkPara.style.textAlign = "center"
     userList.append(userListItem)
-    reposList.append(repoListItem)
+    // reposList.append(repoListItem)
     userListItem.previousElementSibling.remove()
     userListItem.append(userLogin, userPicPara, userLinkPara)
         const btn = document.createElement('button')
         btn.innerText = "Get Repositories"
+        btn.type = "button"
         btn.addEventListener('click', handleRepo(`${user.login}`))
         userLogin.append(btn)
         console.log(userList)
@@ -63,7 +65,7 @@ function handleRepo(userName) {
     .then(res => res.json())
     .then((repoData) => {
         for(i = 0; i < repoData.length; i++) {
-            console.log(repoData[i].html_url)
+            renderRepo(repoData[i].html_url)
         }
     })
     .catch(err => console.log(err))
@@ -74,7 +76,8 @@ function handleRepo(userName) {
 
 
  function renderRepo(item) {
-    const reposList = document.getElementById('repos-list')
+    const userReposList = document.querySelector("#repos-list")
     const repoListItem = document.createElement("li")
-    reposList.append(repoListItem)
+    userReposList.append(repoListItem)
+    repoListItem.innerText = `${item}`
  }
