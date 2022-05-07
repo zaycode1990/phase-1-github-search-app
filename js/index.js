@@ -28,8 +28,8 @@ catch(error){ console.error(error) }
 function renderData(user){
 	
 const userList = document.getElementById('user-list')
-const reposList = document.getElementById('repos-list')
-const repoListItem = document.createElement("li")
+// const reposList = document.getElementById('repos-list')
+// const repoListItem = document.createElement("li")
 const userListItem = document.createElement("li")
 const userLogin = document.createElement('p')
 const userPicPara = document.createElement('p')
@@ -62,10 +62,9 @@ function handleRepo(userName) {
     fetch(`https://api.github.com/users/${userName}/repos`)
     .then(res => res.json())
     .then((repoData) => {
-        for(const data of repoData) {
-    console.log(data.html_url)
+        for(i = 0; i < repoData.length; i++) {
+            console.log(repoData[i].html_url)
         }
-  
     })
     .catch(err => console.log(err))
 
@@ -74,3 +73,8 @@ function handleRepo(userName) {
 
 
 
+ function renderRepo(item) {
+    const reposList = document.getElementById('repos-list')
+    const repoListItem = document.createElement("li")
+    reposList.append(repoListItem)
+ }
