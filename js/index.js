@@ -1,14 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
     const gitForm = document.querySelector('#github-form')
     gitForm.addEventListener('submit', (e) =>{
+       
         e.preventDefault()
         e.stopPropagation()
        gitUserSelect(e.target.querySelector('#search').value)
        
-    })
+    }, )
 
     
-})
+},)
 
  async function gitUserSelect(userName) {
  try {const response = await fetch(`https://api.github.com/search/users?q=${userName}`)
@@ -54,7 +55,9 @@ const userLink = document.createElement('a')
         const btn = document.createElement('button')
         btn.innerText = "Get Repositories"
         btn.type = "button"
-        btn.addEventListener('click', handleRepo(`${user.login}`))
+        btn.addEventListener('click', () =>
+            handleRepo(user.login)
+        )
         userLogin.append(btn)
         console.log(userList)
 }
@@ -63,7 +66,7 @@ const userLink = document.createElement('a')
 function handleRepo(userName) {
     fetch(`https://api.github.com/users/${userName}/repos`)
     .then(res => res.json())
-    .then((repoData) => {
+    .then((repoData) => { 
         for(i = 0; i < repoData.length; i++) {
             renderRepo(repoData[i].html_url)
         }
@@ -78,6 +81,9 @@ function handleRepo(userName) {
  function renderRepo(item) {
     const userReposList = document.querySelector("#repos-list")
     const repoListItem = document.createElement("li")
+    const repoDataAnchor = document.createElement('a')
+    repoDataAnchor.href = item
+    repoListItem.appendChild(repoDataAnchor)
     userReposList.append(repoListItem)
-    repoListItem.innerText = `${item}`
+    repoDataAnchor.innerText = `${item}`
  }
