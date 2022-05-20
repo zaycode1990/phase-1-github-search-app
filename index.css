@@ -15,7 +15,7 @@ ul {
 #repos-list {
   margin: 0;
     position: absolute;
-    top: 350%;
+    top: 650px;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%)
